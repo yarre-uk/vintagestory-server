@@ -1,7 +1,10 @@
 services:
   vintage-story:
     container_name: vsserver
-    image: pepecitron/vintagestory-server
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # image: pepecitron/vintagestory-server
     restart: unless-stopped
     stdin_open: true
     tty: true
