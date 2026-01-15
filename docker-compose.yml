@@ -14,3 +14,4 @@ services:
       - "42420:42420"
     volumes:
       - ./data:/data/server-file
+      - ./mods:/data/server-file/Mods
