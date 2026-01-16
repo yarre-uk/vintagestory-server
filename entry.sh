@@ -1,17 +1,28 @@
 #!/bin/sh
 
-# Ensure User and Group IDs
-if [ ! "$(id -u vintagestory)" -eq "$UID" ]; then usermod -o -u "$UID" vintagestory ; fi
-if [ ! "$(id -g vintagestory)" -eq "$GID" ]; then groupmod -o -g "$GID" vintagestory ; fi
-
 # Path to version file
 VERSION_FILE="/data/server-file/.version"
 
 # Path to server dll
-SERVER_DLL="/data/VintagestoryServer.dll"
+SERVER_DLL_PATH="/data/server-file/server"
 
 # Apply server configuration
 serverconfig="/data/server-file/serverconfig.json"
+
+# Download and extract the server if the version is different or VintagestoryServer.dll is missing
+if [ ! -f "$VERSION_FILE" ] || [ ! "$SERVER_VERSION" = "$(cat $VERSION_FILE || echo '')" ] || [ ! -f "$SERVER_DLL_PATH/VintagestoryServer.dll" ]; then
+	echo "Downloading server version $SERVER_VERSION..."
+	cd $SERVER_DLL_PATH
+	wget https://cdn.vintagestory.at/gamefiles/$SERVER_BRANCH/vs_server_linux-x64_$SERVER_VERSION.tar.gz
+	tar xzf vs_server_linux-x64_$SERVER_VERSION.tar.gz
+	rm vs_server_linux-x64_$SERVER_VERSION.tar.gz
+	echo $SERVER_VERSION > $VERSION_FILE
+
+	# rm vs_server_linux-x64_$SERVER_VERSION.tar.gz
+	echo "$SERVER_VERSION" installed
+else
+	echo "Server already up-to-date"
+fi
 
 if [ ! -f "$serverconfig" ]; then
 	cp /data/default-serverconfig.json "$serverconfig"
@@ -110,5 +121,5 @@ if [ -n "$WORLDCONFIG_AUCTION_HOUSE" ]; then jq '.WorldConfig.WorldConfiguration
 
 # Start server
 echo "Launching server..."
-cd /data
+cd $SERVER_DLL_PATH
 dotnet VintagestoryServer.dll --dataPath /data/server-file

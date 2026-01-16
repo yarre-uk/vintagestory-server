@@ -98,11 +98,6 @@
 - **WORLDCONFIG_AUCTION_HOUSE** [true, false] (default: true)
 </details> 
 
-### System User
-
-- **UID** User ID (default: 1000)
-- **GID** Group ID (default: 1000)
-
 # Expose
 
 - 42420
