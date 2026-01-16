@@ -102,32 +102,7 @@
 
 - 42420
 
-# Docker Compose
-
-Example of docker compose file
-
-```yaml
-version: "3.8"
-
-services:
-  vintage-story:
-    container_name: vsserver
-    image: pepecitron/vintagestory-server
-    restart: unless-stopped
-    stdin_open: true
-    tty: true
-    ports:
-      - "42420:42420"
-    volumes:
-      - ./data:/data/server-file
-```
-
-# Help
-
 ## Server console
-
-You need `stdin_open` and `tty` to true in docker compose file.
-
 To interact with the console, you need to attach to the container, replace <container_name> with your container name.
 
 ```docker attach <container_name>```
