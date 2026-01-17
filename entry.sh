@@ -13,6 +13,7 @@ serverconfig="/data/server-file/serverconfig.json"
 if [ ! "$(id -u vintagestory)" -eq "$UID" ]; then usermod -o -u "$UID" vintagestory ; fi
 if [ ! "$(id -g vintagestory)" -eq "$GID" ]; then groupmod -o -g "$GID" vintagestory ; fi
 
+
 # Download and extract the server if the version is different or VintagestoryServer.dll is missing
 if [ ! -f "$VERSION_FILE" ] || [ ! "$SERVER_VERSION" = "$(cat $VERSION_FILE || echo '')" ] || [ ! -f "$SERVER_DLL_PATH/VintagestoryServer.dll" ]; then
 	echo "Downloading server version $SERVER_VERSION..."
@@ -124,6 +125,8 @@ if [ -n "$WORLDCONFIG_SNOW_ACCUM" ]; then jq '.WorldConfig.WorldConfiguration.sn
 if [ -n "$WORLDCONFIG_ALLOW_LAND_CLAIMING" ]; then jq '.WorldConfig.WorldConfiguration.allowLandClaiming = ($val | test("true"))' --arg val "$WORLDCONFIG_ALLOW_LAND_CLAIMING" $serverconfig | sponge $serverconfig ; fi
 if [ -n "$WORLDCONFIG_CLASS_EXCLUSIVE_RECIPES" ]; then jq '.WorldConfig.WorldConfiguration.classExclusiveRecipes = ($val | test("true"))' --arg val "$WORLDCONFIG_CLASS_EXCLUSIVE_RECIPES" $serverconfig | sponge $serverconfig ; fi
 if [ -n "$WORLDCONFIG_AUCTION_HOUSE" ]; then jq '.WorldConfig.WorldConfiguration.auctionHouse = ($val | test("true"))' --arg val "$WORLDCONFIG_AUCTION_HOUSE" $serverconfig | sponge $serverconfig ; fi
+
+chown -R vintagestory:vintagestory /data
 
 # Start server
 echo "Launching server..."
