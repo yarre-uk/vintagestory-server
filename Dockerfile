@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/dotnet/runtime:8.0
 
-ENV SERVER_PORT="42420"
+ENV UID="1000" \
+    GID="1000"
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y wget netcat-traditional jq moreutils && \
@@ -9,15 +10,19 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir /data && mkdir /data/server-file && mkdir /data/server-file/server
 
-EXPOSE $SERVER_PORT
+RUN useradd -u $UID -U -m -s /bin/false vintagestory && usermod -G users vintagestory && \
+    chown -R vintagestory:vintagestory /data
+    
+USER vintagestory
 
 HEALTHCHECK --start-period=1m --interval=5s CMD nc -z 127.0.0.1 $SERVER_PORT
 
 VOLUME ["/data/server-file"]
+EXPOSE $SERVER_PORT
 
 WORKDIR /data
 
 COPY serverconfig.json default-serverconfig.json
 COPY entry.sh scripts/entry.sh
 
-CMD ["sh", "./scripts/entry.sh"]
+CMD ["bash", "./scripts/entry.sh"]
