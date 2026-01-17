@@ -346,7 +346,7 @@
   "NextPlayerGroupUid": 10,
   "GroupChatHistorySize": 20,
   "MaxOwnedGroupChannelsPerUser": 10,
-  "WhitelistMode": "default",
+  "WhitelistMode": "on",
   "VerifyPlayerAuth": true,
   "DefaultSpawn": null,
   "AllowPvP": true,
