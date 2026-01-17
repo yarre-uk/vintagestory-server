@@ -16,6 +16,9 @@ if [ ! "$(id -g vintagestory)" -eq "$GID" ]; then groupmod -o -g "$GID" vintages
 # Download and extract the server if the version is different or VintagestoryServer.dll is missing
 if [ ! -f "$VERSION_FILE" ] || [ ! "$SERVER_VERSION" = "$(cat $VERSION_FILE || echo '')" ] || [ ! -f "$SERVER_DLL_PATH/VintagestoryServer.dll" ]; then
 	echo "Downloading server version $SERVER_VERSION..."
+
+	if [ ! -d  "$SERVER_DLL_PATH" ]; then mkdir $SERVER_DLL_PATH ; fi
+
 	cd $SERVER_DLL_PATH
 	wget https://cdn.vintagestory.at/gamefiles/$SERVER_BRANCH/vs_server_linux-x64_$SERVER_VERSION.tar.gz
 	tar xzf vs_server_linux-x64_$SERVER_VERSION.tar.gz
