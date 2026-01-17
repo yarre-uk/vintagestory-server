@@ -12,8 +12,6 @@ RUN apt-get update && \
 
 RUN useradd -u $UID -U -m -s /bin/false vintagestory && usermod -G users vintagestory && \
     chown -R vintagestory:vintagestory /data
-    
-USER vintagestory
 
 HEALTHCHECK --start-period=1m --interval=5s CMD nc -z 127.0.0.1 $SERVER_PORT
 

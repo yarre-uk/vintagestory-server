@@ -125,4 +125,4 @@ if [ -n "$WORLDCONFIG_AUCTION_HOUSE" ]; then jq '.WorldConfig.WorldConfiguration
 # Start server
 echo "Launching server..."
 cd $SERVER_DLL_PATH
-dotnet VintagestoryServer.dll --dataPath /data/server-file
+su vintagestory -s /bin/sh -p -c "dotnet VintagestoryServer.dll --dataPath /data/server-file"
