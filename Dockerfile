@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/dotnet/runtime:8.0
 
+ENV SERVER_PORT="42420"
+
 RUN apt-get update && \
     apt-get install --no-install-recommends -y wget netcat-traditional jq moreutils && \
     apt-get clean autoclean && \
@@ -7,7 +9,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir /data && mkdir /data/server-file && mkdir /data/server-file/server
 
-EXPOSE 42420
+EXPOSE $SERVER_PORT
 
 HEALTHCHECK --start-period=1m --interval=5s CMD nc -z 127.0.0.1 $SERVER_PORT
 

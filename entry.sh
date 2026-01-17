@@ -17,8 +17,6 @@ if [ ! -f "$VERSION_FILE" ] || [ ! "$SERVER_VERSION" = "$(cat $VERSION_FILE || e
 	tar xzf vs_server_linux-x64_$SERVER_VERSION.tar.gz
 	rm vs_server_linux-x64_$SERVER_VERSION.tar.gz
 	echo $SERVER_VERSION > $VERSION_FILE
-
-	# rm vs_server_linux-x64_$SERVER_VERSION.tar.gz
 	echo "$SERVER_VERSION" installed
 else
 	echo "Server already up-to-date"

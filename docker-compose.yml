@@ -3,15 +3,15 @@ services:
     container_name: vsserver
     env_file:
       - .env
+      - .env.custom
     build:
       context: ./
       dockerfile: Dockerfile
     # image: pepecitron/vintagestory-server
-    # restart: unless-stopped
     stdin_open: true
     tty: true
     environment:
-      SERVER_PASSWORD: "secret"
+      - SERVER_PORT=42420
     ports:
       - "42420:42420"
     volumes:
