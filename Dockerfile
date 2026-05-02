@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/runtime:8.0
+FROM mcr.microsoft.com/dotnet/runtime:10.0
 
-ENV UID="1000" \
-    GID="1000"
+ENV UID="1001" \
+    GID="1001"
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y wget netcat-traditional jq moreutils && \
